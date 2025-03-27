@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
-import connectDB from '@/lib/mongodb';
-import Chat from '@/models/Chat';
+import { authOptions } from '../auth/auth-options';
+import { Chat } from '@/models/Chat';
+import { connectToDatabase } from '@/lib/mongodb';
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
 
 export async function GET() {
   try {
@@ -12,7 +17,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await connectDB();
+    await connectToDatabase();
     
     // Find or create a chat for the user
     let chat = await Chat.findOne({ userEmail: session.user.email });
@@ -42,9 +47,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { messages } = await request.json();
+    const { messages }: { messages: Message[] } = await request.json();
     
-    await connectDB();
+    await connectToDatabase();
     
     // Update or create chat with new messages
     const chat = await Chat.findOneAndUpdate(

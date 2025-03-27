@@ -2,13 +2,22 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
 import { findRelevantDocuments } from '@/lib/embeddings';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../auth/auth-options';
 
 if (!process.env.GOOGLE_API_KEY) {
   throw new Error('GOOGLE_API_KEY is not set in environment variables');
 }
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+interface ChatRequest {
+  messages: Message[];
+}
 
 // Function to check if a query is drug-related
 function isDrugRelatedQuery(query: string): boolean {

@@ -1,8 +1,17 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../auth/auth-options';
 import { connectToDatabase } from '@/lib/mongodb';
 import { Chat } from '@/models/Chat';
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+interface ChatRequest {
+  messages: Message[];
+}
 
 export async function GET() {
   try {
@@ -42,7 +51,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { messages } = await request.json();
+    const { messages }: ChatRequest = await request.json();
     
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
