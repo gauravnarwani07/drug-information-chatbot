@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Drug Information & Recommendations Assistant
 
-## Getting Started
+A Next.js-based web application that provides drug information and recommendations using FDA-approved medication data. The application uses AI to provide structured responses about medications, their uses, side effects, and recommendations.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 💊 Drug information and recommendations based on FDA-approved medications
+- 🔍 Semantic search across drug labels
+- 📱 Responsive design for all devices
+- 🔐 Google authentication (optional)
+- 💬 Chat interface with message history
+- 📝 Local storage for non-authenticated users
+- 🔄 Cross-device sync for authenticated users
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, React, TailwindCSS
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB
+- **Authentication**: NextAuth.js with Google Provider
+- **AI**: Google's Gemini AI
+- **Vector Search**: MongoDB Atlas Vector Search
+
+## Prerequisites
+
+- Node.js 18+ and npm
+- MongoDB Atlas account
+- Google Cloud Project (for authentication)
+- Google AI API key
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+MONGODB_URI=your_mongodb_uri
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_API_KEY=your_google_api_key
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/drug-info-assistant.git
+cd drug-info-assistant
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Learn More
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+# Edit .env.local with your credentials
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Run the development server:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+1. Start the application and navigate to the homepage
+2. Type your drug-related query in the chat interface
+3. The assistant will provide structured information about medications
+4. Optional: Sign in with Google to sync your chat history across devices
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Endpoints
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/api/chat` - Handles chat messages and AI responses
+- `/api/chats` - Manages chat history for authenticated users
+- `/api/auth/[...nextauth]` - Handles authentication
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- FDA for providing drug label data
+- Google for Gemini AI and authentication services
+- Next.js team for the amazing framework
+- MongoDB for the database and vector search capabilities
